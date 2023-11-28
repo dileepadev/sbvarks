@@ -1,0 +1,6 @@
+numpy
+scikit-learn
+selenium
+joblib
+pandas
+jupyter

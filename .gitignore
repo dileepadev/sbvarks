@@ -1,0 +1,13 @@
+__pycache__/
+.idea/
+fonts/
+pictures/
+videos/
+venv/
+data/
+/sbvarks-bpd/models/shape_predictor_68_face_landmarks.dat
+/sbvarks-sad/Form/dataset.py
+/studentprofiler-api/static/firebase.js
+/studentprofiler-api/static/VARKCal.js
+/studentprofiler-api/static/video.js
+/studentprofiler-api/video.py

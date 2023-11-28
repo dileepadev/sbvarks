@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "498356370051",
+    "project_id": "sbvarks",
+    "storage_bucket": "sbvarks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498356370051:android:021f753e3897b87cf479b6",
+        "android_client_info": {
+          "package_name": "dev.dileepabandara.studentprofiler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498356370051-vf001k00ema15nmio4opvtl485fu7gsn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.dileepabandara.studentprofiler",
+            "certificate_hash": "f2b92f3010dfda24b5c8fa996439dac5ffbadc4d"
+          }
+        },
+        {
+          "client_id": "498356370051-7neh30ed6frkhq2lrar0kqfqb604k9il.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq6v9JBNJBnNw_v55t4I4huG4K3Vk8VLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498356370051-7neh30ed6frkhq2lrar0kqfqb604k9il.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profiler | Admin</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<section id="section-1" class="text-center">
+    <img id="img-logo-2" class="img-fluid" src="{{ url_for('static', filename='images/2-tr.png') }}" alt="logo">
+</section>
+<section id="section-2">
+    <div class="row">
+        <div id="select-profile" class="col-sm-7">
+            <h4>Step 1: Select Profile Details</h4>
+            <br>
+            <form class="was-validated">
+                <h6>Select Teacher</h6>
+                <label for="teacher-dropdown"></label>
+                <select id="teacher-dropdown" class="form-select" required aria-label="select teacher">
+                    <option value="">Select the teacher</option>
+                </select>
+                <div class="invalid-feedback">Please select a teacher.</div>
+                <br>
+                <h6>Select Student</h6>
+                <label for="student-dropdown"></label>
+                <select id="student-dropdown" class="form-select" required aria-label="select student">
+                    <option value="">Please select the teacher first</option>
+                </select>
+                <div class="invalid-feedback">Please select a student.</div>
+                <br>
+                <h6>Select Subject</h6>
+                <label for="subject-dropdown"></label>
+                <select id="subject-dropdown" class="form-select" required aria-label="select subject">
+                    <option value="">Select the subject</option>
+                </select>
+                <div class="invalid-feedback">Please select a subject.</div>
+                <br>
+            </form>
+        </div>
+        <br>
+        <div id="display-profile" class="col-sm-5 text-center">
+            <img id="img-avatar" class="img-fluid" src="{{ url_for('static', filename='images/avatar.png') }}"
+                 alt="logo">
+            <br>
+            <h6>Student Name</h6>
+            <p id="student-name">Please select a student</p>
+            <h6>Student Grade</h6>
+            <p id="student-grade">Please select a student</p>
+            <br>
+        </div>
+    </div>
+</section>
+<section id="section-3">
+    <h4>Step 2: Add Student Behaviour</h4>
+    <br>
+    <div class="row">
+        <!-- VISUAL -->
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5><span id="card-title-v" class="card-title badge rounded-pill">Visual</span></h5>
+                    <form class="was-validated" novalidate>
+                        <div id="text-field" class="col-md-8 position-relative">
+                            <label for="teacher-feedback-v" class="form-label">Teacher Feedback</label>
+                            <textarea type="text" class="form-control" id="teacher-feedback-v" required></textarea>
+                            <div class="invalid-feedback">
+                                Please provide the teacher feedback.
+                            </div>
+                        </div>
+                        <br>
+                        <div id="text-field" class="col-md-8 position-relative">
+                            <label for="student-feedback-v" class="form-label">Student Feedback</label>
+                            <textarea type="text" class="form-control" id="student-feedback-v" required></textarea>
+                            <div class="invalid-feedback">
+                                Please provide the student feedback.
+                            </div>
+                        </div>
+                        <br>
+                        <div class="mb-3">
+                            <label for="videoInput-v" class="form-label">Student Video</label>
+                            <input type="file" class="form-control" aria-label="file example" id="videoInput-v" required
+                                   accept="video/mp4">
+                            <div class="invalid-feedback">Please provide a valid video file (.mp4).
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Video Uploaded Successfully -->
+                    <div id="video-upload-success-text-v">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Video Uploaded!</h6>
+                    </div>
+                    <!-- Emotion Detection -->
+                    <div id="emotion-detection-success-text-v">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Emotion Detection Successful!</h6>
+                    </div>
+                    <div id="emotion-values-generated-text-v">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Emotional Values Generated!</h6>
+                    </div>
+                    <!-- SPINNER -->
+                    <div id="btn-add-behaviour-spinner-v">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <h6 id="spinner-text" style="display: inline-block; margin-left: 5px;">Processing...</h6>
+                    </div>
+                    <br>
+                    <!-- Display Analysis Process -->
+                    <img id="video-process-frame-v" class="img-fluid" alt="Emotion Detection V" style="display: none;"
+                         src="https://fakeimg.pl/600x400?text=loading+...">
+                </div>
+            </div>
+        </div>
+        <!-- AUDITORY -->
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5><span id="card-title-a" class="card-title badge rounded-pill">Auditory</span></h5>
+                    <form class="was-validated" novalidate>
+                        <div id="text-field" class="col-md-8 position-relative">
+                            <label for="teacher-feedback-a" class="form-label">Teacher Feedback</label>
+                            <textarea type="text" class="form-control" id="teacher-feedback-a" required></textarea>
+                            <div class="invalid-feedback">
+                                Please provide the teacher feedback.
+                            </div>
+                        </div>
+                        <br>
+                        <div id="text-field" class="col-md-8 position-relative">
+                            <label for="student-feedback-a" class="form-label">Student Feedback</label>
+                            <textarea type="text" class="form-control" id="student-feedback-a" required></textarea>
+                            <div class="invalid-feedback">
+                                Please provide the student feedback.
+                            </div>
+                        </div>
+                        <br>
+                        <div class="mb-3">
+                            <label for="videoInput-a" class="form-label">Student Video</label>
+                            <input type="file" class="form-control" aria-label="file example" id="videoInput-a" required
+                                   accept="video/mp4">
+                            <div class="invalid-feedback">Please provide a valid video file (.mp4).
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Video Uploaded Successfully -->
+                    <div id="video-upload-success-text-a">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Video Uploaded!</h6>
+                    </div>
+                    <!-- Emotion Detection -->
+                    <div id="emotion-detection-success-text-a">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Emotion Detection Successful!</h6>
+                    </div>
+                    <div id="emotion-values-generated-text-a">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Emotional Values Generated!</h6>
+                    </div>
+                    <!-- SPINNER -->
+                    <div id="btn-add-behaviour-spinner-a">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <h6 id="spinner-text" style="display: inline-block; margin-left: 5px;">Processing...</h6>
+                    </div>
+                    <br>
+                    <!-- Display Analysis Process -->
+                    <img id="video-process-frame-a" class="img-fluid" alt="Emotion Detection V" style="display: none;"
+                         src="https://fakeimg.pl/600x400?text=loading+...">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <!-- READING/WRITING -->
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5><span id="card-title-r" class="card-title badge rounded-pill">Reading/Writing</span></h5>
+                    <form class="was-validated" novalidate>
+                        <div id="text-field" class="col-md-8 position-relative">
+                            <label for="teacher-feedback-r" class="form-label">Teacher Feedback</label>
+                            <textarea type="text" class="form-control" id="teacher-feedback-r" required></textarea>
+                            <div class="invalid-feedback">
+                                Please provide the teacher feedback.
+                            </div>
+                        </div>
+                        <br>
+                        <div id="text-field" class="col-md-8 position-relative">
+                            <label for="student-feedback-r" class="form-label">Student Feedback</label>
+                            <textarea type="text" class="form-control" id="student-feedback-r" required></textarea>
+                            <div class="invalid-feedback">
+                                Please provide the student feedback.
+                            </div>
+                        </div>
+                        <br>
+                        <div class="mb-3">
+                            <label for="videoInput-r" class="form-label">Student Video</label>
+                            <input type="file" class="form-control" aria-label="file example" id="videoInput-r" required
+                                   accept="video/mp4">
+                            <div class="invalid-feedback">Please provide a valid video file (.mp4).
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Video Uploaded Successfully -->
+                    <div id="video-upload-success-text-r">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Video Uploaded!</h6>
+                    </div>
+                    <!-- Emotion Detection -->
+                    <div id="emotion-detection-success-text-r">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Emotion Detection Successful!</h6>
+                    </div>
+                    <div id="emotion-values-generated-text-r">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Emotional Values Generated!</h6>
+                    </div>
+                    <!-- SPINNER -->
+                    <div id="btn-add-behaviour-spinner-r">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <h6 id="spinner-text" style="display: inline-block; margin-left: 5px;">Processing...</h6>
+                    </div>
+                    <br>
+                    <!-- Display Analysis Process -->
+                    <img id="video-process-frame-r" class="img-fluid" alt="Emotion Detection V" style="display: none;"
+                         src="https://fakeimg.pl/600x400?text=loading+...">
+                </div>
+            </div>
+        </div>
+        <!-- KINESTHETIC -->
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5><span id="card-title-k" class="card-title badge rounded-pill">Kinesthetic</span></h5>
+                    <form class="was-validated" novalidate>
+                        <div id="text-field" class="col-md-8 position-relative">
+                            <label for="teacher-feedback-k" class="form-label">Teacher Feedback</label>
+                            <textarea type="text" class="form-control" id="teacher-feedback-k" required></textarea>
+                            <div class="invalid-feedback">
+                                Please provide the teacher feedback.
+                            </div>
+                        </div>
+                        <br>
+                        <div id="text-field" class="col-md-8 position-relative">
+                            <label for="student-feedback-k" class="form-label">Student Feedback</label>
+                            <textarea type="text" class="form-control" id="student-feedback-k" required></textarea>
+                            <div class="invalid-feedback">
+                                Please provide the student feedback.
+                            </div>
+                        </div>
+                        <br>
+                        <div class="mb-3">
+                            <label for="videoInput-k" class="form-label">Student Video</label>
+                            <input type="file" class="form-control" aria-label="file example" id="videoInput-k" required
+                                   accept="video/mp4">
+                            <div class="invalid-feedback">Please provide a valid video file (.mp4).
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Video Uploaded Successfully -->
+                    <div id="video-upload-success-text-k">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Video Uploaded!</h6>
+                    </div>
+                    <!-- Emotion Detection -->
+                    <div id="emotion-detection-success-text-k">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Emotion Detection Successful!</h6>
+                    </div>
+                    <div id="emotion-values-generated-text-k">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        <h6 style="display: inline-block; margin-left: 5px;">Emotional Values Generated!</h6>
+                    </div>
+                    <!-- SPINNER -->
+                    <div id="btn-add-behaviour-spinner-k">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <h6 id="spinner-text" style="display: inline-block; margin-left: 5px;">Processing...</h6>
+                    </div>
+                    <br>
+                    <!-- Display Analysis Process -->
+                    <img id="video-process-frame-k" class="img-fluid" alt="Emotion Detection V" style="display: none;"
+                         src="https://fakeimg.pl/600x400?text=loading+...">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-4" class="text-center">
+    <button id="btn-add-behaviour" class="btn btn-dark" type="button">Add Behaviour</button>
+    <br>
+    <br>
+    <div id="section4-alert" class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Student Behaviour Added!</h4>
+        <p>You have successfully added the student behaviour to the teacher's profile. Please make sure to add all the
+            student behaviours before going to the next step.</p>
+    </div>
+    <div id="section4-alert" class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Error!</h4>
+        <p> There was an error adding the student behaviour to the teacher's profile. Please try again.</p>
+        <hr>
+        <p class="mb-0">If the error persists, please contact the administrator.</p>
+    </div>
+</section>
+<section id="section-5">
+    <h4>Step 3: Review Student VARK Profile</h4>
+    <br>
+    <h4><span id="card-title-h4" class="card-title badge rounded">Student Details</span></h4>
+    <br>
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <th class="col-2">Student Name</th>
+            <td id="ldStudentName" class="col-5">Not Available</td>
+        </tr>
+        <tr>
+            <th class="col-2">Student Grade</th>
+            <td id="ldStudentGrade" class="col-5">Not Available</td>
+        </tr>
+        <tr>
+            <th class="col-2">Student Teacher</th>
+            <td id="ldStudentTeacher" class="col-5">Not Available</td>
+        </tr>
+        <tr>
+            <th class="col-2">Student Subject</th>
+            <td id="ldStudentSubject" class="col-5">Not Available</td>
+        </tbody>
+    </table>
+    <br>
+    <h4><span id="card-title-h4" class="card-title badge rounded">Sentiment Analysis</span></h4>
+    <br>
+    <table id="table-sentiment" class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">VARK Style</th>
+            <th scope="col">Teacher Feedback</th>
+            <th scope="col">Student Feedback</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Visual</td>
+            <td id="teacherSentimentV">Not Available</td>
+            <td id="studentSentimentV">Not Available</td>
+        </tr>
+        <tr>
+            <td>Auditory</td>
+            <td id="teacherSentimentA">Not Available</td>
+            <td id="studentSentimentA">Not Available</td>
+        </tr>
+        <tr>
+            <td>Reading/Writing</td>
+            <td id="teacherSentimentR">Not Available</td>
+            <td id="studentSentimentR">Not Available</td>
+        </tr>
+        <tr>
+            <td>Kinesthetic</td>
+            <td id="teacherSentimentK">Not Available</td>
+            <td id="studentSentimentK">Not Available</td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <h4><span id="card-title-h4" class="card-title badge rounded">Facial Emotion Analysis</span></h4>
+    <br>
+    <table id="table-facial" class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">VARK Style</th>
+            <th scope="col">Highest Emotion</th>
+            <th scope="col">Emotion Percentage</th>
+            <TH scope="col">Happiness Value</TH>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Visual</td>
+            <td id="highestEmotionV">Not Available</td>
+            <td id="emotionPercentageV">Not Available</td>
+            <td id="happinessValueV">Not Available</td>
+        </tr>
+        <tr>
+            <td>Auditory</td>
+            <td id="highestEmotionA">Not Available</td>
+            <td id="emotionPercentageA">Not Available</td>
+            <td id="happinessValueA">Not Available</td>
+        </tr>
+        <tr>
+            <td>Reading/Writing</td>
+            <td id="highestEmotionR">Not Available</td>
+            <td id="emotionPercentageR">Not Available</td>
+            <td id="happinessValueR">Not Available</td>
+        </tr>
+        <tr>
+            <td>Kinesthetic</td>
+            <td id="highestEmotionK">Not Available</td>
+            <td id="emotionPercentageK">Not Available</td>
+            <td id="happinessValueK">Not Available</td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <h4><span id="card-title-h4" class="card-title badge rounded">VARK Details</span></h4>
+    <br>
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <th class="col">Visual</th>
+            <td id="ldVarkValueV" class="col">Not Available</td>
+            <td id="ldVarkValueVL" class="col">Not Available</td>
+        </tr>
+        <tr>
+            <th class="col">Auditory</th>
+            <td id="ldVarkValueA" class="col">Not Available</td>
+            <td id="ldVarkValueAL" class="col">Not Available</td>
+        </tr>
+        <tr>
+            <th class="col">Reading/Writing</th>
+            <td id="ldVarkValueR" class="col">Not Available</td>
+            <td id="ldVarkValueRL" class="col">Not Available</td>
+        </tr>
+        <tr>
+            <th class="col">Kiensthetic</th>
+            <td id="ldVarkValueK" class="col">Not Available</td>
+            <td id="ldVarkValueKL" class="col">Not Available</td>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <button id="btn-add-generate-plan" class="btn btn-dark" type="button">Generate Study Plan</button>
+    <br>
+</section>
+<section id="section-6">
+    <h4>Step 4: Generate Student Study Plan</h4>
+    <br>
+    <table id="table-facial" class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Visual Plan</th>
+            <th scope="col">Auditory Plan</th>
+            <th scope="col">Reading/Writing Plan</th>
+            <TH scope="col">Kinesthetic Plan</TH>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td id="generatedplanV1">Not Available</td>
+            <td id="generatedplanV2">Not Available</td>
+            <td id="generatedplanV3">Not Available</td>
+            <td id="generatedplanV4">Not Available</td>
+        </tr>
+        <tr>
+            <td id="generatedplanA1">Not Available</td>
+            <td id="generatedplanA2">Not Available</td>
+            <td id="generatedplanA3">Not Available</td>
+            <td id="generatedplanA4">Not Available</td>
+        </tr>
+        <tr>
+            <td id="generatedplanR1">Not Available</td>
+            <td id="generatedplanR2">Not Available</td>
+            <td id="generatedplanR3">Not Available</td>
+            <td id="generatedplanR4">Not Available</td>
+        </tr>
+        <tr>
+            <td id="generatedplanK1">Not Available</td>
+            <td id="generatedplanK2">Not Available</td>
+            <td id="generatedplanK3">Not Available</td>
+            <td id="generatedplanK4">Not Available</td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <button id="btn-submit-plan" class="btn btn-danger" type="button">Submit Study Plan</button>
+    <br>
+    <br>
+    <!-- SPINNER -->
+    <div id="btn-submit-plan-spinner-r" class="text-center">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <h6 id="spinner-text" style="display: inline-block; margin-left: 5px;">Submitting...</h6>
+    </div>
+</section>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="bi bi-check-circle-fill" style="color: green;"></i>
+            <strong class="me-auto" style="display: inline-block; margin-left: 5px;">Study Plan Submitted!</strong>
+            <small>Now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            You have successfully submitted the study plan to the teacher. Please wait for the teacher to approve the
+            study plan.
+        </div>
+    </div>
+    <div id="liveToast-error" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="bi bi-exclamation-circle-fill" style="color: red;"></i>
+            <strong class="me-auto" style="display: inline-block; margin-left: 5px;">Wrong Submission!</strong>
+            <small>Now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            This is an invalid submission. Please make sure to add all the student behaviours before submitting the
+            study plan.
+        </div>
+    </div>
+</div>
+<script src="
+            {{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
